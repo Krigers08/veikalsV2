@@ -1,9 +1,9 @@
 <?php
 class CustomerController
 {
-    public static function index($conn)
+    public static function index()
     {
-        $stmt = $conn->query("SELECT * FROM customers");
+        $stmt = DB::query("SELECT * FROM customers");
         $customers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         echo "<h1>Klientu saraksts</h1>";
