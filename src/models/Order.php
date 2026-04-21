@@ -24,4 +24,19 @@ class Order
 
         return DB::query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
+    public static function getCount(): int
+    {
+        $stmt = DB::query("SELECT COUNT(*) FROM orders");
+        return (int) $stmt->fetchColumn();
+    }
+
+    public static function getCountByStatus(): array
+    {
+        $stmt = DB::query("
+            SELECT status, COUNT(*) AS count
+            FROM orders
+            GROUP BY status
+        ");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

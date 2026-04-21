@@ -39,4 +39,9 @@ class Customer
 
         return $customers;
     }
+    public static function getCount(): int
+    {
+        $stmt = DB::query("SELECT COUNT(*) FROM customers");
+        return (int) $stmt->fetchColumn();
+    }
 }
