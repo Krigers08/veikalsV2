@@ -5,13 +5,7 @@ class DB
 
     public static function connect()
     {
-        $config = [
-            'host' => '172.18.80.1',
-            'database' => 'store_dev',
-            'charset' => 'utf8mb4',
-            'username' => 'store_app',
-            'password' => 'password',
-        ];
+        $config = require __DIR__ . '/../config.php';
 
         $dsn = sprintf(
             "mysql:host=%s;dbname=%s;charset=%s",
