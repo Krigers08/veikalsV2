@@ -3,7 +3,8 @@ class OrderController
 {
     public static function index()
     {
-        $orders = Order::getAll();
+        $status = $_GET['status'] ?? null;
+        $orders = Order::getAll($status);
         require __DIR__ . '/../views/orders.php';
     }
 }

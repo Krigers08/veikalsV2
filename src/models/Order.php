@@ -1,9 +1,9 @@
 <?php
 class Order
 {
-    public static function getAll(): array
+    public static function getAll(string $status = null): array
     {
-        $stmt = DB::query("
+        $sql = "
             SELECT
                 o.order_id,
                 o.date,
@@ -14,9 +14,14 @@ class Order
                 c.surname
             FROM orders o
             LEFT JOIN customers c ON c.customer_id = o.customer_id
-            ORDER BY o.order_id
-        ");
+        ";
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if ($status !== null) {
+            $sql .= " WHERE o.status = " . DB::$pdo->quote($status);
+        }
+
+        $sql .= " ORDER BY o.order_id";
+
+        return DB::query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 }
