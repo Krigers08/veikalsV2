@@ -3,7 +3,8 @@ PHP customer and order viewer.
 `config.php` — database connection settings
 `db/DB.php` — connects to the database using PDO, runs queries
 `public/index.php` — entry point, routes `/customers` to the controller
-`src/controllers/CustomerController.php` — fetches customers and their orders, groups them
+`src/controllers/CustomerController.php` — fetches customers from models
+`Customer.php` and `Order.php` fetch customer and order data where `Customer.php` groups them into a hierachical setup
 `src/views/customers.php` — displays the customer list with orders nested below each one
 
 to launch
