@@ -1,6 +1,7 @@
 <?php
 
 require __DIR__ . '/../db/DB.php';
+require __DIR__ . '/../src/models/Customer.php';
 require __DIR__ . '/../src/controllers/CustomerController.php';
 
 DB::connect();
