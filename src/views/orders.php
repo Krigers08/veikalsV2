@@ -1,5 +1,5 @@
-<?php require __DIR__ . '/layout/nav.php'; ?>
 <?php
+require __DIR__ . '/layout/nav.php';
 echo "<h1>Pasūtījumu saraksts</h1>";
 echo "<ul>";
 foreach ($orders as $order) {
@@ -10,4 +10,5 @@ foreach ($orders as $order) {
     echo " — " . htmlspecialchars($order['status']);
     echo "</li>";
 }
-echo "</ul>";
+echo "</ul>";?>
+<a href="/orders/create">+ Jauns pasūtījums</a>

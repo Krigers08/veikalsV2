@@ -39,4 +39,18 @@ class Order
         ");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public static function create(string $date, string $status, string $comment, string $delivery_date, int $customer_id): void
+    {
+        $stmt = DB::$pdo->prepare("
+            INSERT INTO orders (date, status, comment, delivery_date, customer_id)
+            VALUES (:date, :status, :comment, :delivery_date, :customer_id)
+        ");
+        $stmt->execute([
+            ':date'=>$date,
+            ':status'=>$status,
+            ':comment'=>$comment,
+            ':delivery_date'=>$delivery_date,
+            ':customer_id'=>$customer_id,
+        ]);
+    }
 }

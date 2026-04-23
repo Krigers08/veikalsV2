@@ -44,4 +44,9 @@ class Customer
         $stmt = DB::query("SELECT COUNT(*) FROM customers");
         return (int) $stmt->fetchColumn();
     }
+    public static function getAll(): array
+    {
+        $stmt = DB::query("SELECT customer_id, name, surname FROM customers ORDER BY surname");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

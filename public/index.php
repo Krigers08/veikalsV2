@@ -19,3 +19,9 @@ if ($requestUri === '/customers') {
 if ($requestUri === '/orders') {
     OrderController::index();
 }
+if ($requestUri === '/orders/create') {
+    OrderController::create();
+}
+if ($requestUri === '/orders/store') {
+    OrderController::store();
+}
