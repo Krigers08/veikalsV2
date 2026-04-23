@@ -1,6 +1,30 @@
 <?php
 class Customer
 {
+    public int $customer_id;
+    public string $name;
+    public string $surname;
+    public string $email;
+    public array $orders;
+
+    public function __construct(array $row)
+    {
+        $this->customer_id = $row['customer_id'];
+        $this->name        = $row['name'];
+        $this->surname     = $row['surname'];
+        $this->email       = $row['email'];
+        $this->orders      = [];
+    }
+
+    public static function getAll(): array
+    {
+        $stmt = DB::query("SELECT customer_id, name, surname FROM customers ORDER BY surname");
+        return array_map(
+            fn($row) => new self($row),
+            $stmt->fetchAll(PDO::FETCH_ASSOC)
+        );
+    }
+
     public static function getAllWithOrders(): array
     {
         $stmt = DB::query("
@@ -22,31 +46,19 @@ class Customer
         foreach ($rows as $row) {
             $cid = $row['customer_id'];
             if (!isset($customers[$cid])) {
-                $customers[$cid] = [
-                    'name'   => $row['name'] . ' ' . $row['surname'],
-                    'email'  => $row['email'],
-                    'orders' => [],
-                ];
+                $customers[$cid] = new self($row);
             }
             if ($row['order_id'] !== null) {
-                $customers[$cid]['orders'][] = [
-                    'id'     => $row['order_id'],
-                    'date'   => $row['date'],
-                    'status' => $row['status'],
-                ];
+                $customers[$cid]->orders[] = new Order($row);
             }
         }
 
         return $customers;
     }
+
     public static function getCount(): int
     {
         $stmt = DB::query("SELECT COUNT(*) FROM customers");
         return (int) $stmt->fetchColumn();
-    }
-    public static function getAll(): array
-    {
-        $stmt = DB::query("SELECT customer_id, name, surname FROM customers ORDER BY surname");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

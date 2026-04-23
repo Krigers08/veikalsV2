@@ -16,10 +16,11 @@
     <label>Klients:
         <select name="customer_id" required>
             <?php foreach ($customers as $customer): ?>
-                <option value="<?= $customer['customer_id'] ?>">
-                    <?= htmlspecialchars($customer['name'] . ' ' . $customer['surname']) ?>
+                <option value="<?= $customer->customer_id ?>">
+                    <?= htmlspecialchars($customer->name . ' ' . $customer->surname) ?>
                 </option>
             <?php endforeach; ?>
+        </select>
         </select>
     </label><br>
     <button type="submit">Izveidot</button>

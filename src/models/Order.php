@@ -1,6 +1,27 @@
 <?php
 class Order
 {
+    public int $order_id;
+    public string $date;
+    public string $status;
+    public ?string $comment;
+    public ?string $delivery_date;
+    public int $customer_id;
+    public ?string $name;
+    public ?string $surname;
+
+    public function __construct(array $row)
+    {
+        $this->order_id = $row['order_id'];
+        $this->date = $row['date'];
+        $this->status = $row['status'];
+        $this->comment = $row['comment'] ?? null;
+        $this->delivery_date = $row['delivery_date'] ?? null;
+        $this->customer_id = $row['customer_id'];
+        $this->name = $row['name'] ?? null;
+        $this->surname = $row['surname'] ?? null;
+    }
+
     public static function getAll(string $status = null): array
     {
         $sql = "
@@ -10,6 +31,7 @@ class Order
                 o.status,
                 o.comment,
                 o.delivery_date,
+                o.customer_id,
                 c.name,
                 c.surname
             FROM orders o
@@ -22,7 +44,10 @@ class Order
 
         $sql .= " ORDER BY o.order_id";
 
-        return DB::query($sql)->fetchAll(PDO::FETCH_ASSOC);
+        return array_map(
+            fn($row) => new self($row),
+            DB::query($sql)->fetchAll(PDO::FETCH_ASSOC)
+        );
     }
     public static function getCount(): int
     {
@@ -46,11 +71,11 @@ class Order
             VALUES (:date, :status, :comment, :delivery_date, :customer_id)
         ");
         $stmt->execute([
-            ':date'=>$date,
-            ':status'=>$status,
-            ':comment'=>$comment,
-            ':delivery_date'=>$delivery_date,
-            ':customer_id'=>$customer_id,
+            ':date' => $date,
+            ':status' => $status,
+            ':comment' => $comment,
+            ':delivery_date' => $delivery_date,
+            ':customer_id' => $customer_id,
         ]);
     }
 }
