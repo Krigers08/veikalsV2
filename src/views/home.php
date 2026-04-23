@@ -1,3 +1,4 @@
+<?php require __DIR__ . '/layout/nav.php'; ?>
 <?php
 echo "<h1>Statistika</h1>";
 echo "<p>Klienti: " . $stats['customer_count'] . "</p>";

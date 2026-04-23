@@ -1,3 +1,4 @@
+<?php require __DIR__ . '/layout/nav.php'; ?>
 <?php
 echo "<h1>Pasūtījumu saraksts</h1>";
 echo "<ul>";
