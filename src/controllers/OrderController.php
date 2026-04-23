@@ -26,4 +26,30 @@ class OrderController
         header('Location: /orders');
         exit;
     }
+    public static function edit(int $id)
+    {
+        $order     = Order::getById($id);
+        require __DIR__ . '/../views/orders_edit.php';
+    }
+
+    public static function update(int $id)
+    {
+        Order::update(
+            $id,
+            $_POST['date'],
+            $_POST['status'],
+            $_POST['comment'],
+            $_POST['delivery_date'],
+            $order->customer_id
+        );
+        header('Location: /orders');
+        exit;
+    }
+
+    public static function delete(int $id)
+    {
+        Order::delete($id);
+        header('Location: /orders');
+        exit;
+    }
 }

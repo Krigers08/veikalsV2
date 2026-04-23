@@ -78,4 +78,35 @@ class Order
             ':customer_id' => $customer_id,
         ]);
     }
+    public static function getById(int $id): Order
+    {
+        $stmt = DB::$pdo->prepare("SELECT * FROM orders WHERE order_id = :id");
+        $stmt->execute([':id' => $id]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return new self($row);
+    }
+
+    public static function update(int $id, string $date, string $status, string $comment, string $delivery_date): void
+    {
+        $stmt = DB::$pdo->prepare("
+            UPDATE orders
+            SET date = :date, status = :status, comment = :comment, delivery_date = :delivery_date
+            WHERE order_id = :id
+        ");
+        $stmt->execute([
+            ':id'            => $id,
+            ':date'          => $date,
+            ':status'        => $status,
+            ':comment'       => $comment,
+            ':delivery_date' => $delivery_date,
+        ]);
+
+    }
+
+    public static function delete(int $id): void
+    {
+        $stmt = DB::$pdo->prepare("DELETE FROM orders WHERE order_id = :id");
+        $stmt->execute([':id' => $id]);
+    }
+    const STATUSES = ['Pending', 'Delivered', 'Not Delivered', 'Cancelled'];
 }

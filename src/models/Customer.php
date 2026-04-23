@@ -4,7 +4,7 @@ class Customer
     public int $customer_id;
     public string $name;
     public string $surname;
-    public string $email;
+    public ?string $email;
     public array $orders;
 
     public function __construct(array $row)
@@ -18,7 +18,7 @@ class Customer
 
     public static function getAll(): array
     {
-        $stmt = DB::query("SELECT customer_id, name, surname FROM customers ORDER BY surname");
+        $stmt = DB::query("SELECT customer_id, name, surname, email FROM customers ORDER BY surname");
         return array_map(
             fn($row) => new self($row),
             $stmt->fetchAll(PDO::FETCH_ASSOC)
@@ -61,4 +61,5 @@ class Customer
         $stmt = DB::query("SELECT COUNT(*) FROM customers");
         return (int) $stmt->fetchColumn();
     }
+    const STATUSES = ['Pending', 'Delivered', 'Not Delivered', 'Cancelled'];
 }

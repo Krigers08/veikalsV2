@@ -5,7 +5,11 @@
         <input type="date" name="date" required>
     </label><br>
     <label>Statuss:
-        <input type="text" name="status" required>
+        <select name="status" required>
+            <?php foreach (Order::STATUSES as $status): ?>
+                <option value="<?= $status ?>"><?= $status ?></option>
+            <?php endforeach; ?>
+        </select>
     </label><br>
     <label>Komentārs:
         <input type="text" name="comment">

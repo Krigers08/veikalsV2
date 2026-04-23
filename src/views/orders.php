@@ -4,6 +4,8 @@
     <?php foreach ($orders as $order): ?>
         <li>
             Pasūtījums #<?= $order->order_id ?> — <?= htmlspecialchars($order->name . ' ' . $order->surname) ?> — <?= htmlspecialchars($order->date) ?> — <?= htmlspecialchars($order->status) ?>
+            <a href="/orders/<?= $order->order_id ?>/edit">Labot</a>
+            <a href="/orders/<?= $order->order_id ?>/delete">Dzēst</a>
         </li>
     <?php endforeach; ?>
 </ul>
